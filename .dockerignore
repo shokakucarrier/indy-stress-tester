@@ -2,3 +2,4 @@
 .DS_Store
 Dockerfile
 *.yaml
+apache-jmeter-*

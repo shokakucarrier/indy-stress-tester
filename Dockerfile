@@ -1,6 +1,8 @@
 FROM maven:3.6-jdk-11
-USER 1000:1000
-COPY --chown=1000:1000 ./ /code
-ENV PATH="/code/apache-jmeter-5.1.1/bin:${PATH}"
+COPY ./ /code
+ADD http://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.zip /code
+RUN apt update && apt install unzip && unzip /code/apache-jmeter-5.2.zip -d /code && rm -f /code/apache-jmeter-5.2.zip
+RUN chmod -R 777 /code
+ENV PATH="/code/apache-jmeter-5.2/bin:${PATH}"
 WORKDIR /code
 CMD ["./entrypoint.sh","build-simulation-existing.jmx", "container5.properties"]
