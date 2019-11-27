@@ -8,3 +8,4 @@ RUN chmod -R 777 /code
 ENV PATH="/code/apache-jmeter-5.2/bin:${PATH}"
 WORKDIR /code
 CMD ["./entrypoint.sh","build-simulation-existing.jmx", "container5.properties"]
+#CMD ["./entrypoint.sh","build-simulation-existing.jmx", "5", "localhost", "8080"]
