@@ -190,6 +190,22 @@ build.uploadCoords.each{coord-&gt;
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
+        <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="Prometheus Listener" enabled="true">
+          <collectionProp name="prometheus.collector_definitions">
+            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+              <stringProp name="collector.help">Measuring response time of create a hosted repo</stringProp>
+              <stringProp name="collector.metric_name">indy_host_creation_rt</stringProp>
+              <stringProp name="collector.type">HISTOGRAM</stringProp>
+              <collectionProp name="collector.labels">
+                <stringProp name="102727412">label</stringProp>
+              </collectionProp>
+              <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
+              <stringProp name="listener.collector.listen_to">samples</stringProp>
+              <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
+            </elementProp>
+          </collectionProp>
+        </com.github.johrstrom.listener.PrometheusListener>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add build group" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -272,6 +288,53 @@ build.uploadCoords.each{coord-&gt;
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
+            <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="Prometheus Listener" enabled="true">
+              <collectionProp name="prometheus.collector_definitions">
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">measuring indy response time of download artifact</stringProp>
+                  <stringProp name="collector.metric_name">indy_download_rt_hist</stringProp>
+                  <stringProp name="collector.type">HISTOGRAM</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
+                  <stringProp name="listener.collector.listen_to">samples</stringProp>
+                  <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">meaturing indy success response ratio</stringProp>
+                  <stringProp name="collector.metric_name">indy_download_response_success_ratio</stringProp>
+                  <stringProp name="collector.type">SUCCESS_RATIO</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
+                  <stringProp name="listener.collector.measuring">SuccessRatio</stringProp>
+                  <stringProp name="listener.collector.listen_to">samples</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">indy total number of success request a artifact</stringProp>
+                  <stringProp name="collector.metric_name">indy_download_success_total</stringProp>
+                  <stringProp name="collector.type">COUNTER</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                  <stringProp name="listener.collector.measuring">SuccessTotal</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">default help string</stringProp>
+                  <stringProp name="collector.metric_name">indy_download_rt_summary</stringProp>
+                  <stringProp name="collector.type">SUMMARY</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
+                  <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
+                </elementProp>
+              </collectionProp>
+            </com.github.johrstrom.listener.PrometheusListener>
+            <hashTree/>
             <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="Response Time Graph" enabled="false">
               <boolProp name="ResultCollector.error_logging">false</boolProp>
               <objProp>
@@ -655,7 +718,7 @@ new File( vars.get(&quot;downloadDir&quot;), vars.get(&quot;repoCounter&quot;)).
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">/home/jdcasey/code/testing/indy-perf-tests/output/build-simulation/aggregate-report.log</stringProp>
+          <stringProp name="filename">~/Project/indy-stress-tester/output/build-simulation/aggregate-report.log</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
