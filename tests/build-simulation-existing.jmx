@@ -195,7 +195,7 @@ prometheus.ip </stringProp>
           <collectionProp name="prometheus.collector_definitions">
             <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
               <stringProp name="collector.help">Measuring response time of create a hosted repo</stringProp>
-              <stringProp name="collector.metric_name">indy_host_creation_rt</stringProp>
+              <stringProp name="collector.metric_name">indy_others_rt_hist</stringProp>
               <stringProp name="collector.type">HISTOGRAM</stringProp>
               <collectionProp name="collector.labels">
                 <stringProp name="102727412">label</stringProp>
@@ -204,6 +204,13 @@ prometheus.ip </stringProp>
               <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
               <stringProp name="listener.collector.listen_to">samples</stringProp>
               <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+              <stringProp name="collector.help">default help string</stringProp>
+              <stringProp name="collector.metric_name">indy_others_rt_summary</stringProp>
+              <stringProp name="collector.type">SUMMARY</stringProp>
+              <collectionProp name="collector.labels"/>
+              <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
             </elementProp>
           </collectionProp>
         </com.github.johrstrom.listener.PrometheusListener>
@@ -348,24 +355,20 @@ prometheus.ip </stringProp>
                   <stringProp name="collector.help">default help string</stringProp>
                   <stringProp name="collector.metric_name">indy_dl_count_total</stringProp>
                   <stringProp name="collector.type">COUNTER</stringProp>
-                  <collectionProp name="collector.labels"/>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
                   <stringProp name="collector.quantiles_or_buckets"></stringProp>
                   <stringProp name="listener.collector.listen_to">samples</stringProp>
                   <stringProp name="listener.collector.measuring">CountTotal</stringProp>
                 </elementProp>
                 <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
                   <stringProp name="collector.help">default help string</stringProp>
-                  <stringProp name="collector.metric_name">indy_dl_success_total</stringProp>
-                  <stringProp name="collector.type">COUNTER</stringProp>
-                  <collectionProp name="collector.labels"/>
-                  <stringProp name="collector.quantiles_or_buckets"></stringProp>
-                  <stringProp name="listener.collector.measuring">SuccessTotal</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-                  <stringProp name="collector.help">default help string</stringProp>
                   <stringProp name="collector.metric_name">indy_dl_response_size</stringProp>
                   <stringProp name="collector.type">HISTOGRAM</stringProp>
-                  <collectionProp name="collector.labels"/>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
                   <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
                   <stringProp name="listener.collector.measuring">ResponseSize</stringProp>
                 </elementProp>
@@ -373,7 +376,9 @@ prometheus.ip </stringProp>
                   <stringProp name="collector.help">default help string</stringProp>
                   <stringProp name="collector.metric_name">indy_dl_idle_time</stringProp>
                   <stringProp name="collector.type">SUMMARY</stringProp>
-                  <collectionProp name="collector.labels"/>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
                   <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
                   <stringProp name="listener.collector.measuring">IdleTime</stringProp>
                 </elementProp>
@@ -533,6 +538,31 @@ vars.put(&quot;metadataPath&quot;, &quot;${gPath}/${a}/maven-metadata.xml&quot;)
               <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
+            <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="Pom upload Prometheus Listener" enabled="false">
+              <collectionProp name="prometheus.collector_definitions">
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">default help string</stringProp>
+                  <stringProp name="collector.metric_name">indy_up_pom_count_total</stringProp>
+                  <stringProp name="collector.type">COUNTER</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                  <stringProp name="listener.collector.measuring">CountTotal</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">default help string</stringProp>
+                  <stringProp name="collector.metric_name">indy_up_pom_success_ratio</stringProp>
+                  <stringProp name="collector.type">SUCCESS_RATIO</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                  <stringProp name="listener.collector.measuring">SuccessRatio</stringProp>
+                </elementProp>
+              </collectionProp>
+            </com.github.johrstrom.listener.PrometheusListener>
+            <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PUT metadata file" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -591,6 +621,30 @@ vars.put(&quot;metadataPath&quot;, &quot;${gPath}/${a}/maven-metadata.xml&quot;)
               <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
+            <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="metadata upload Prometheus Listener" enabled="false">
+              <collectionProp name="prometheus.collector_definitions">
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">default help string</stringProp>
+                  <stringProp name="collector.metric_name">indy_up_meta_count_total</stringProp>
+                  <stringProp name="collector.type">COUNTER</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                  <stringProp name="listener.collector.measuring">CountTotal</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                  <stringProp name="collector.help">default help string</stringProp>
+                  <stringProp name="collector.metric_name">indy_up_meta_success_ratio</stringProp>
+                  <stringProp name="collector.type">COUNTER</stringProp>
+                  <collectionProp name="collector.labels">
+                    <stringProp name="102727412">label</stringProp>
+                  </collectionProp>
+                  <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                </elementProp>
+              </collectionProp>
+            </com.github.johrstrom.listener.PrometheusListener>
+            <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve build-group metadata file" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
@@ -622,6 +676,60 @@ vars.put(&quot;metadataPath&quot;, &quot;${gPath}/${a}/maven-metadata.xml&quot;)
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
+          <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="Upload Prometheus Listener" enabled="true">
+            <collectionProp name="prometheus.collector_definitions">
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_up_count_total</stringProp>
+                <stringProp name="collector.type">COUNTER</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                <stringProp name="listener.collector.measuring">CountTotal</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_up_success_ratio</stringProp>
+                <stringProp name="collector.type">SUCCESS_RATIO</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                <stringProp name="listener.collector.measuring">SuccessRatio</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_up_latency</stringProp>
+                <stringProp name="collector.type">HISTOGRAM</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
+                <stringProp name="listener.collector.measuring">Latency</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_up_rt_hist</stringProp>
+                <stringProp name="collector.type">HISTOGRAM</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
+                <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_up_rt_summary</stringProp>
+                <stringProp name="collector.type">SUMMARY</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
+              </elementProp>
+            </collectionProp>
+          </com.github.johrstrom.listener.PrometheusListener>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Promote Build Output" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
