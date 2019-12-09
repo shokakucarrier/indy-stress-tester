@@ -451,11 +451,11 @@ prometheus.ip </stringProp>
               <stringProp name="filename"></stringProp>
             </ResultCollector>
             <hashTree/>
-            <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="false">
-              <stringProp name="FileSaver.filename">${downloadDir}/${repoCounter}/download-</stringProp>
+            <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
+              <stringProp name="FileSaver.filename">${downloadDir}/${repoCounter}/${path}</stringProp>
               <boolProp name="FileSaver.errorsonly">false</boolProp>
-              <boolProp name="FileSaver.skipautonumber">false</boolProp>
-              <boolProp name="FileSaver.skipsuffix">false</boolProp>
+              <boolProp name="FileSaver.skipautonumber">true</boolProp>
+              <boolProp name="FileSaver.skipsuffix">true</boolProp>
               <boolProp name="FileSaver.successonly">false</boolProp>
             </ResultSaver>
             <hashTree/>

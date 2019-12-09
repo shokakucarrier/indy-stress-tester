@@ -1,0 +1,30 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: jenkins
+  name: indy-stress-tester-build
+  namespace: nos-automation
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    pushSecret:
+      name: quaydotio-nosbot
+    to:
+      kind: DockerImage
+      name: quay.io/factory2/indy-stress-tester:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: https://github.com/shokakucarrier/indy-stress-tester.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      noCache: true
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+  triggers: []

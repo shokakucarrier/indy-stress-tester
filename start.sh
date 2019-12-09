@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 SCRIPT=$(cd ${0%/*} && echo $PWD/${0##*/})
 # THIS=`realpath ${0}`
 DIR=`dirname ${SCRIPT}`
@@ -17,11 +16,6 @@ rm -f $LOG
 
 echo "Starting Indy..."
 docker run --rm --name indy_local -d -p 8080:8080 -p 8081:8081 quay.io/factory2/indy:latest-release
-#nohup $INDY_WORKDIR/bin/debug-launcher.rb 2>&1 > $PWD/indy-console.log &
-#INDY_PID=$!
-#echo "Indy console is logging to: ${PWD}/indy-console.log"
-
-#echo "Indy running in PID: ${INDY_PID}"
 
 echo "Waiting for Indy startup to complete..."
 while ! lsof -i -P | grep 8080 | grep LISTEN 2>&1 > /dev/null; do
@@ -34,20 +28,6 @@ while ! lsof -i -P | grep 8080 | grep LISTEN 2>&1 > /dev/null; do
   sleep 0.1 # wait for 1/10 of the second before check again
 done
 
-#echo "Downloading Maven Central files (output is in $PWD/download.log)..."
-#$DIR/populate-central.py 2>&1 > $PWD/download.log
-
-#read -p "Start tests? (NOTE: If you haven't started a profiler, you might want to now.) " yn
-#case $yn in
-#	[Yy]*) echo "Tests starting..."
-#		  	break;;
-#	[Nn]*) echo "Shutting down Indy on PID: ..."
-#	      docker stop indy_local
-#			  docker container prune -f
-#			  exit;;
-#	*) echo "Please enter y/n."
-#       break;;
-#esac
 
 echo "$JMETER -n -t $TEST -S $PROPS -l $LOG"
 $JMETER -n -t $TEST -S $PROPS -l $LOG
