@@ -130,9 +130,7 @@ counter=1
 build.uploadCoords.each{coord-&gt;
   vars.put(&quot;upload_${counter}&quot;, coord)
   counter++
-}
-
-prometheus.ip </stringProp>
+}</stringProp>
         </JSR223Sampler>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add build hosted repo" enabled="true">

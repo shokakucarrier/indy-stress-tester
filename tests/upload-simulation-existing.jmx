@@ -60,6 +60,14 @@ new File( vars.get(&quot;downloadDir&quot;) ).mkdirs()
           <stringProp name="RandomTimer.range">100.0</stringProp>
         </UniformRandomTimer>
         <hashTree/>
+        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <boolProp name="resetInterpreter">false</boolProp>
+          <stringProp name="script">${__Random(0,2385, buildNumber)}
+${__setProperty(buildNumber, ${buildNumber})}</stringProp>
+        </BeanShellPreProcessor>
+        <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Build Setup" enabled="true">
           <stringProp name="scriptLanguage">groovy</stringProp>
           <stringProp name="parameters"></stringProp>
@@ -69,32 +77,24 @@ new File( vars.get(&quot;downloadDir&quot;) ).mkdirs()
 import groovy.json.JsonSlurper
 
 def rand = new Random();
-def buildNumber = Math.abs(rand.nextInt()) % 2386
+//def buildNumber = Math.abs(rand.nextInt()) % 2386
 
-vars.put( &quot;repoCounter&quot;, Long.toString(System.currentTimeMillis()) + &apos;-&apos; + buildNumber );
+vars.put( &quot;repoCounter&quot;, Long.toString(System.currentTimeMillis()));
 
 new File(vars.get(&quot;downloadDir&quot;), vars.get(&quot;repoCounter&quot;)).mkdirs()
 
 def inputDir = System.getProperty(&quot;inputDir&quot;)
 
 def counter=1
-def build = new JsonSlurper().parse(new File(&quot;${inputDir}/build-data/build-${buildNumber}.json&quot;))
+def build = new JsonSlurper().parse(new File(&quot;${inputDir}/build-data/build-${__property(buildNumber)}.json&quot;))
 
 build.downloads.each{path-&gt;
   vars.put(&quot;download_${counter}&quot;, path)
   counter++
-}
-
-counter=1
-build.uploadCoords.each{coord-&gt;
-  vars.put(&quot;upload_${counter}&quot;, coord)
-  counter++
-}
-
-prometheus.ip </stringProp>
+}</stringProp>
         </JSR223Sampler>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add build hosted repo" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add build hosted repo" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -129,7 +129,27 @@ prometheus.ip </stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add build group" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -143,7 +163,6 @@ prometheus.ip </stringProp>
   &quot;doctype&quot; : &quot;group&quot;,&#xd;
   &quot;name&quot; : &quot;test-${repoCounter}&quot;,&#xd;
   &quot;constituents&quot;:[&#xd;
-    &quot;hosted:test-${repoCounter}&quot;,&#xd;
     &quot;group:public&quot;&#xd;
   ]&#xd;
 }&#xd;
@@ -166,7 +185,27 @@ prometheus.ip </stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
         <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="Download files" enabled="true">
           <stringProp name="ForeachController.inputVal">download</stringProp>
           <stringProp name="ForeachController.returnVal">path</stringProp>
@@ -195,8 +234,8 @@ prometheus.ip </stringProp>
             <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
               <stringProp name="FileSaver.filename">${downloadDir}/${path}</stringProp>
               <boolProp name="FileSaver.errorsonly">false</boolProp>
-              <boolProp name="FileSaver.skipautonumber">false</boolProp>
-              <boolProp name="FileSaver.skipsuffix">false</boolProp>
+              <boolProp name="FileSaver.skipautonumber">true</boolProp>
+              <boolProp name="FileSaver.skipsuffix">true</boolProp>
               <boolProp name="FileSaver.successonly">false</boolProp>
             </ResultSaver>
             <hashTree/>
@@ -270,7 +309,7 @@ new File( vars.get(&quot;downloadDir&quot;) ).mkdirs()
           <stringProp name="RandomTimer.range">100.0</stringProp>
         </UniformRandomTimer>
         <hashTree/>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Build Setup" enabled="true">
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Upload Build Setup" enabled="true">
           <stringProp name="scriptLanguage">groovy</stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="filename"></stringProp>
@@ -279,29 +318,19 @@ new File( vars.get(&quot;downloadDir&quot;) ).mkdirs()
 import groovy.json.JsonSlurper
 
 def rand = new Random();
-def buildNumber = Math.abs(rand.nextInt()) % 2386
+//def buildNumber = Math.abs(rand.nextInt()) % 2386
 
-vars.put( &quot;repoCounter&quot;, Long.toString(System.currentTimeMillis()) + &apos;-&apos; + buildNumber );
-
-new File(vars.get(&quot;downloadDir&quot;), vars.get(&quot;repoCounter&quot;)).mkdirs()
+vars.put( &quot;repoCounter&quot;, Long.toString(System.currentTimeMillis()) );
 
 def inputDir = System.getProperty(&quot;inputDir&quot;)
 
 def counter=1
-def build = new JsonSlurper().parse(new File(&quot;${inputDir}/build-data/build-${buildNumber}.json&quot;))
+def build = new JsonSlurper().parse(new File(&quot;${inputDir}/build-data/build-${__property(buildNumber)}.json&quot;))
 
 build.downloads.each{path-&gt;
   vars.put(&quot;download_${counter}&quot;, path)
   counter++
-}
-
-counter=1
-build.uploadCoords.each{coord-&gt;
-  vars.put(&quot;upload_${counter}&quot;, coord)
-  counter++
-}
-
-prometheus.ip </stringProp>
+}</stringProp>
         </JSR223Sampler>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add build hosted repo" enabled="true">
@@ -339,14 +368,34 @@ prometheus.ip </stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
         <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="upload files" enabled="true">
           <stringProp name="ForeachController.inputVal">download</stringProp>
           <stringProp name="ForeachController.returnVal">path</stringProp>
           <boolProp name="ForeachController.useSeparator">true</boolProp>
         </ForeachController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Upload artifact" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="${downloadDir}/${path}" elementType="HTTPFileArg">
@@ -363,7 +412,7 @@ prometheus.ip </stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/content/maven/host/test-${repoCounter}/${Path}</stringProp>
+            <stringProp name="HTTPSampler.path">/api/content/maven/host/test-${repoCounter}</stringProp>
             <stringProp name="HTTPSampler.method">PUT</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -500,6 +549,91 @@ prometheus.ip </stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
+          <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="Prometheus Listener" enabled="true">
+            <collectionProp name="prometheus.collector_definitions">
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_rt_hist</stringProp>
+                <stringProp name="collector.type">HISTOGRAM</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
+                <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_rt_summary</stringProp>
+                <stringProp name="collector.type">SUMMARY</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
+                <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_success_total</stringProp>
+                <stringProp name="collector.type">COUNTER</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                <stringProp name="listener.collector.measuring">SuccessTotal</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_response_success_ratio</stringProp>
+                <stringProp name="collector.type">SUCCESS_RATIO</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                <stringProp name="listener.collector.measuring">SuccessRatio</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_latency</stringProp>
+                <stringProp name="collector.type">HISTOGRAM</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
+                <stringProp name="listener.collector.measuring">Latency</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_count_total</stringProp>
+                <stringProp name="collector.type">COUNTER</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets"></stringProp>
+                <stringProp name="listener.collector.measuring">CountTotal</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_response_size</stringProp>
+                <stringProp name="collector.type">HISTOGRAM</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
+                <stringProp name="listener.collector.measuring">ResponseSize</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
+                <stringProp name="collector.help">default help string</stringProp>
+                <stringProp name="collector.metric_name">indy_promo_idle_time</stringProp>
+                <stringProp name="collector.type">SUMMARY</stringProp>
+                <collectionProp name="collector.labels">
+                  <stringProp name="102727412">label</stringProp>
+                </collectionProp>
+                <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
+                <stringProp name="listener.collector.measuring">IdleTime</stringProp>
+              </elementProp>
+            </collectionProp>
+          </com.github.johrstrom.listener.PrometheusListener>
           <hashTree/>
         </hashTree>
       </hashTree>

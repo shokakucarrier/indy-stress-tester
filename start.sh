@@ -7,7 +7,7 @@ DIR=`dirname ${SCRIPT}`
 #INDY_WORKDIR=${INDY_WORKDIR:-$PWD}
 
 JMETER=${JMETER:-$HOME/apache-jmeter-5.1.1/bin/jmeter}
-TEST=${JMETER_TEST:-$DIR/tests/build-simulation-existing.jmx}
+TEST=${JMETER_TEST:-$DIR/tests/upload-simulation-existing.jmx}
 LOG=${JMETER_LOG:-"$DIR/$(basename $TEST).log"}
 PROPS=${JMETER_PROPS:-$DIR/inputs/properties/local5.properties}
 
