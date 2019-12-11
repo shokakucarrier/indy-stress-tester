@@ -11,9 +11,9 @@ pipeline {
       node {label 'indystress'}
     }
     stages {
-        stage("Test Suites"){
-            steps{
-                script{
+        stage('Test Suites'){
+            steps {
+                script {
                     def jmeterScripts = findFiles(glob: "${scriptDir}/*.jmx")
                     jmeterScripts.each{
                         suiteNames << it.name
@@ -22,9 +22,9 @@ pipeline {
                 }
             }
         }
-        stage("Enter Parameters"){
-            steps{
-                script{
+        stage('Enter Parameters'){
+            steps {
+                script {
                     params = input(
                         id: 'userInput', message: "Please enter a test suite to run:",
                         parameters:[
@@ -41,9 +41,9 @@ pipeline {
                 }
             }
         }
-        stage("Run Test"){
-            steps{
-                script{
+        stage('Run Test'){
+            steps {
+                script {
                     echo "Jmeter running ${script}"
                     sh script: "/src/entrypoint.sh ${script} ${inputThreads} ${inputUrl} ${inputPort}"
                 }
