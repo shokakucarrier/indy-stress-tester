@@ -58,7 +58,7 @@ RUN chgrp -R 0 /usr/share/maven && \
 
 COPY ./ /src
 ADD http://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.1.tgz /src
-RUN tar -xzvf /src/apache-jmeter-5.2.1.tgz -C /src/ && mv /src/jmeter-prometheus-plugin-0.6.0-SNAPSHOT.jar /src/apache-jmeter-5.2.1/lib/ext/
+RUN tar -xzvf /src/apache-jmeter-5.2.1.tgz -C /src/ && mv /src/jmeter-prometheus-plugin-0.6.0-SNAPSHOT.jar /src/apache-jmeter-5.2.1/lib/ext/ && chmod -R 777 /src
 ENV PATH="/src/apache-jmeter-5.2.1/bin:${PATH}"
 EXPOSE 9270
 WORKDIR /src
