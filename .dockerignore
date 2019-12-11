@@ -3,3 +3,4 @@
 Dockerfile
 *.yaml
 apache-jmeter-*
+Jenkinsfile.pipeline
