@@ -9,7 +9,7 @@ DIR=`dirname ${SCRIPT}`
 JMETER=${JMETER:-$HOME/apache-jmeter-5.1.1/bin/jmeter}
 TEST=${JMETER_TEST:-$DIR/tests/upload-simulation-existing.jmx}
 LOG=${JMETER_LOG:-"$DIR/$(basename $TEST).log"}
-PROPS=${JMETER_PROPS:-$DIR/inputs/properties/local5.properties}
+PROPS=${JMETER_PROPS:-$DIR/inputs/properties/local.properties}
 
 rm -rf $DIR/test-downloads
 rm -f $LOG
