@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">${__P(loops, )}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(builders, )}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -837,7 +837,7 @@ new File( vars.get(&quot;downloadDir&quot;), vars.get(&quot;repoCounter&quot;)).
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223PostProcessor>
         <hashTree/>
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="false">
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -869,7 +869,7 @@ new File( vars.get(&quot;downloadDir&quot;), vars.get(&quot;repoCounter&quot;)).
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">~/Project/indy-stress-tester/output/build-simulation/aggregate-report.log</stringProp>
+          <stringProp name="filename">${inputDir}/../aggregate-report.log</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
