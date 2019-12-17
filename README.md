@@ -18,6 +18,7 @@ To start a OpenShift tester container: use Jenkinsfile.pipeline for Jenkins scri
 Under ./tests
 
 * build-simulation-existing.jmx: grab a random set of download files and download from the indy instance. only upload small xml files and do promotion.
+* download-simulation-existing.jmx: download a selection of files to cache and continues download them from cache.
 * upload-simulation-existing.jmx: using only build-1710.json to download these file and upload them again to a new hosted repo in indy, then do promotion.
 
 ## Jmeter properties
@@ -25,6 +26,7 @@ Under ./tests
 Under ./inputs/properties
 
 * builders: number of concurrent load clients.
+* loops: number of loop to be excute during benchmark, not affecting setup and teardown.
 * prometheus.ip: prometheus exporter listen address.
 * hostname: indy instance hostname.
 * port: indy instance API service port.
