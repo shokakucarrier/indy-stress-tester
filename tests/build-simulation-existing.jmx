@@ -856,7 +856,7 @@ new File( vars.get(&quot;downloadDir&quot;), vars.get(&quot;repoCounter&quot;)).
               <subresults>true</subresults>
               <responseData>false</responseData>
               <samplerData>false</samplerData>
-              <xml>false</xml>
+              <xml>true</xml>
               <fieldNames>false</fieldNames>
               <responseHeaders>false</responseHeaders>
               <requestHeaders>false</requestHeaders>
