@@ -49,7 +49,7 @@ pipeline {
             steps {
                 script {
                     echo "Jmeter running ${jmx}"
-                    sh script: "/src/entrypoint.sh ${jmx} ${inputThreads} ${inputUrl} ${inputPort}"
+                    sh script: "THREADS=${inputThreads} HOSTNAME=${inputUrl} PORT=${inputPort} /src/entrypoint.sh ${jmx}"
                 }
             }
         }
