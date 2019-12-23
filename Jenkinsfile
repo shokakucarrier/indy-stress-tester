@@ -64,5 +64,10 @@ pipeline {
                 }
             }
         }
+        stage('Archive'){
+            steps{
+                archiveArtifacts artifacts: "/src/*.xml, /src/*.log"
+            }
+        }
     }
 }
