@@ -60,7 +60,7 @@ vars.put(&quot;git_repo_name&quot;, System.getProperty(&quot;git_repo_name&quot;
               </elementProp>
               <elementProp name="" elementType="Argument">
                 <stringProp name="Argument.name"></stringProp>
-                <stringProp name="Argument.value">/usr/share/git/${git_repo_name}/pom.xml</stringProp>
+                <stringProp name="Argument.value">/src/git/${git_repo_name}/pom.xml</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="" elementType="Argument">
@@ -108,7 +108,7 @@ vars.put(&quot;git_repo_name&quot;, System.getProperty(&quot;git_repo_name&quot;
           <elementProp name="SystemSampler.environment" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="SystemSampler.directory">/usr/share/git/${git_repo_name}</stringProp>
+          <stringProp name="SystemSampler.directory">/src/git/${git_repo_name}</stringProp>
         </SystemSampler>
         <hashTree>
           <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="DA Prometheus Listener" enabled="true">
@@ -259,7 +259,7 @@ vars.put(&quot;git_repo_name&quot;, System.getProperty(&quot;git_repo_name&quot;
           <elementProp name="SystemSampler.environment" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="SystemSampler.directory">/usr/share/git/${git_repo_name}</stringProp>
+          <stringProp name="SystemSampler.directory">/src/git/${git_repo_name}</stringProp>
         </SystemSampler>
         <hashTree/>
         <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="reset repo" enabled="true">
@@ -283,7 +283,7 @@ vars.put(&quot;git_repo_name&quot;, System.getProperty(&quot;git_repo_name&quot;
           <elementProp name="SystemSampler.environment" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="SystemSampler.directory">/usr/share/git/${git_repo_name}</stringProp>
+          <stringProp name="SystemSampler.directory">/src/git/${git_repo_name}</stringProp>
         </SystemSampler>
         <hashTree/>
       </hashTree>
