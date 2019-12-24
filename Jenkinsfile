@@ -47,11 +47,11 @@ pipeline {
                     )
                     jmx = userInput['SCRIPT']
                     inputThreads = userInput.threads?:'5'
-                    inputUrl = userInput.url?:''
+                    inputUrl = userInput.url?:'example.com'
                     inputPort = userInput.port?:'80'
-                    inputDAUrl = userInput.da-url?: ''
-                    inputGitRepoName = userInput.git_repo_name?: ''
-                    inputGitRepoUrl = userInput.git_repo_url?: ''
+                    inputDAUrl = userInput.da-url?: 'example.com'
+                    inputGitRepoName = userInput.git_repo_name?: 'indy'
+                    inputGitRepoUrl = userInput.git_repo_url?: 'https://github.com/Commonjava/indy.git'
                 }
             }
         }
