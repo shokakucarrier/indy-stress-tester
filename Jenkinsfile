@@ -40,18 +40,18 @@ pipeline {
                             string(name: 'threads', defaultValue: '5', description: 'Jmeter treads'),
                             string(name: 'url', defaultValue: 'indy-infra-nos-automation.cloud.paas.psi.redhat.com', description: 'Indy URL to test'),
                             string(name: 'port', defaultValue: '80', description: 'Indy port to test'),
-                            string(name: 'da-url', defaultValue: 'da-stage.psi.redhat.com', description: '*only in DA stress* DA service hostname'),
-                            string(name: 'git_repo_name', defaultValue: 'weft', description: '*only in DA stress* git test sample'),
-                            string(name: 'git_repo_url', defaultValue: 'https://github.com/Commonjava/weft.git', description: '*only in DA stress* git test sample url')
+                            string(name: 'daUrl', defaultValue: 'da-stage.psi.redhat.com', description: '*only in DA stress* DA service hostname'),
+                            string(name: 'gitRepoName', defaultValue: 'weft', description: '*only in DA stress* git test sample'),
+                            string(name: 'gitRepoUrl', defaultValue: 'https://github.com/Commonjava/weft.git', description: '*only in DA stress* git test sample url')
                         ]
                     )
                     jmx = userInput['SCRIPT']
                     inputThreads = userInput.threads?:'5'
                     inputUrl = userInput.url?:'example.com'
                     inputPort = userInput.port?:'80'
-                    inputDAUrl = userInput.da-url?: 'example.com'
-                    inputGitRepoName = userInput.git_repo_name?: 'indy'
-                    inputGitRepoUrl = userInput.git_repo_url?: 'https://github.com/Commonjava/indy.git'
+                    inputDAUrl = userInput.daUrl?: 'example.com'
+                    inputGitRepoName = userInput.gitRepoName?: 'indy'
+                    inputGitRepoUrl = userInput.gitRepoUrl?: 'https://github.com/Commonjava/indy.git'
                 }
             }
         }
