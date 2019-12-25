@@ -67,9 +67,9 @@ pipeline {
         stage('Archive & Publish'){
             steps{
                 script{
-                    sh script: "cp /src/*.log /home/jenkins"
+                    sh script: "cp /src/*.log $WORKSPACE"
                 }
-                archiveArtifacts artifacts: "*.log"
+                archiveArtifacts artifacts: "aggregate-report.log"
                 perfReport 'aggregate-report.log'
             }
         }
