@@ -66,7 +66,10 @@ pipeline {
         }
         stage('Archive'){
             steps{
-                archiveArtifacts artifacts: "/src/*.xml, /src/*.log"
+                script{
+                    sh script: "cp /src/*.log /home/jenkins"
+                }
+                archiveArtifacts artifacts: "*.log"
             }
         }
     }
