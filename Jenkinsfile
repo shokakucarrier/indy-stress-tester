@@ -64,12 +64,13 @@ pipeline {
                 }
             }
         }
-        stage('Archive'){
+        stage('Archive & Publish'){
             steps{
                 script{
                     sh script: "cp /src/*.log /home/jenkins"
                 }
                 archiveArtifacts artifacts: "*.log"
+                perfReport 'aggregate-report.log'
             }
         }
     }
