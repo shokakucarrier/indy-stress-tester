@@ -5,6 +5,7 @@ def jmxNames = []
 
 def jmx = null
 def inputThreads = null
+def inputLoops = null
 def inputUrl = null
 def inputPort = null
 
@@ -38,6 +39,7 @@ pipeline {
                         parameters:[
                             choice(name: 'SCRIPT', choices: jmxNames, description: "Test suite"),
                             string(name: 'threads', defaultValue: '5', description: 'Jmeter treads'),
+                            string(name: 'loops', defaultValue: '10', description: 'Script loops, controls running time'),
                             string(name: 'url', defaultValue: 'indy-infra-nos-automation.cloud.paas.psi.redhat.com', description: 'Indy URL to test'),
                             string(name: 'port', defaultValue: '80', description: 'Indy port to test'),
                             string(name: 'daUrl', defaultValue: 'da-stage.psi.redhat.com', description: '*only in DA stress* DA service hostname'),
@@ -47,9 +49,10 @@ pipeline {
                     )
                     jmx = userInput['SCRIPT']
                     inputThreads = userInput.threads?:'5'
-                    inputUrl = userInput.url?:'example.com'
+                    inputLoops = userInput.loops?:''
+                    inputUrl = userInput.url?:''
                     inputPort = userInput.port?:'80'
-                    inputDAUrl = userInput.daUrl?: 'example.com'
+                    inputDAUrl = userInput.daUrl?: ''
                     inputGitRepoName = userInput.gitRepoName?: 'indy'
                     inputGitRepoUrl = userInput.gitRepoUrl?: 'https://github.com/Commonjava/indy.git'
                 }
@@ -69,8 +72,8 @@ pipeline {
                 script{
                     sh script: "cp /src/*.log $WORKSPACE"
                 }
-                archiveArtifacts artifacts: "aggregate-report.log"
-                perfReport 'aggregate-report.log'
+                archiveArtifacts artifacts: "*.log"
+                perfReport "${jmx}.log"
             }
         }
     }
