@@ -63,7 +63,7 @@ pipeline {
                 script {
                     echo "Jmeter running ${jmx}"
                     sh "printenv"
-                    sh script: "THREADS=${inputThreads} HOSTNAME=${inputUrl} PORT=${inputPort} DA_HOSTNAME=${inputDAUrl} GIT_REPO_NAME=${inputGitRepoName} GIT_REPO_URL=${inputGitRepoUrl} /src/entrypoint.sh ${jmx}"
+                    sh script: "THREADS=${inputThreads} HOSTNAME=${inputUrl} LOOPS=${inputLoops} PORT=${inputPort} DA_HOSTNAME=${inputDAUrl} GIT_REPO_NAME=${inputGitRepoName} GIT_REPO_URL=${inputGitRepoUrl} /src/entrypoint.sh ${jmx}"
                 }
             }
         }
