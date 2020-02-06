@@ -10,10 +10,10 @@ spec:
   nodeSelector: null
   output:
     pushSecret:
-      name: quaydotio-nosbot
+      name: kaine-indybot-pull-secret
     to:
       kind: DockerImage
-      name: quay.io/factory2/indy-stress-tester:latest
+      name: quay.io/kaine/indy-stress-tester:latest
   postCommit: {}
   resources: {}
   runPolicy: Serial
