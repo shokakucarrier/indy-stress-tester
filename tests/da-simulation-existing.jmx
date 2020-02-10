@@ -36,7 +36,16 @@ vars.put(&quot;dahostname&quot;, System.getProperty(&quot;dahostname&quot;))
 vars.put(&quot;git_repo_name&quot;, System.getProperty(&quot;git_repo_name&quot;))
 </stringProp>
         </JSR223Sampler>
-        <hashTree/>
+        <hashTree>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">prev.setIgnore();</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
         <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="Dependency Analysis" enabled="true">
           <boolProp name="SystemSampler.checkReturnCode">true</boolProp>
           <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
@@ -261,7 +270,16 @@ vars.put(&quot;git_repo_name&quot;, System.getProperty(&quot;git_repo_name&quot;
           </elementProp>
           <stringProp name="SystemSampler.directory">/src/git/${git_repo_name}</stringProp>
         </SystemSampler>
-        <hashTree/>
+        <hashTree>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">prev.setIgnore();</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
         <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="reset repo" enabled="true">
           <boolProp name="SystemSampler.checkReturnCode">false</boolProp>
           <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
@@ -285,7 +303,16 @@ vars.put(&quot;git_repo_name&quot;, System.getProperty(&quot;git_repo_name&quot;
           </elementProp>
           <stringProp name="SystemSampler.directory">/src/git/${git_repo_name}</stringProp>
         </SystemSampler>
-        <hashTree/>
+        <hashTree>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">prev.setIgnore();</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
       </hashTree>
     </hashTree>
   </hashTree>
