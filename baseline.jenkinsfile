@@ -1,0 +1,108 @@
+pipeline {
+  agent {
+    kubernetes {
+      cloud params.JENKINS_AGENT_CLOUD_NAME
+      label "jenkins-slave-${UUID.randomUUID().toString()}"
+      serviceAccount "jenkins"
+      defaultContainer 'jnlp'
+      yaml """
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        labels:
+          app: "jenkins-${env.JOB_BASE_NAME}"
+          indy-pipeline-build-number: "${env.BUILD_NUMBER}"
+      spec:
+        containers:
+        - name: jnlp
+          image: quay.io/kaine/indy-stress-tester:latest
+          imagePullPolicy: Always
+          tty: true
+          env:
+          - name: USER
+            value: 'jenkins-k8s-config'
+          - name: HOME
+            value: /home/jenkins
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: 2000m
+            limits:
+              memory: 4Gi
+              cpu: 2000m
+          volumeMounts:
+          - mountPath: /mnt/ocp
+            name: volume-2
+          workingDir: /home/jenkins
+        volumes:
+        - name: volume-2
+          configMap:
+            defaultMode: 420
+            name: jenkins-openshift-mappings
+      """
+    }
+  }
+  options {
+    timeout(time: 60, unit: 'MINUTES')
+  }
+  stages {
+    stage("run stress tests"){
+      failFast false
+      parallel {
+        stage('tester1'){
+          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '0')
+          ]
+        }
+        stage('tester2'){
+          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '1')
+          ]
+        }
+        stage('tester3'){
+          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '2')
+          ]
+        }
+        stage('tester4'){
+          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '3')
+          ]
+        }
+      }
+    }
+    stage("run load up tests"){
+      failFast false
+      parallel {
+        stage('tester1'){
+          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '0')
+          ]
+        }
+        stage('tester2'){
+          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '1')
+          ]
+        }
+        stage('tester3'){
+          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '2')
+          ]
+        }
+        stage('tester4'){
+          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
+          string(name: 'SERIAL_NUMBER', value: '3')
+          ]
+        }
+      }
+    }
+  }
+}
