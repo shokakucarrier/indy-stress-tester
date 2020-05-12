@@ -43,35 +43,43 @@ pipeline {
     }
   }
   options {
-    timeout(time: 60, unit: 'MINUTES')
+    timeout(time: 90, unit: 'MINUTES')
   }
   stages {
     stage("run stress tests"){
       failFast false
       parallel {
         stage('tester1'){
-          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '0')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '0')
+            ]
+          }
         }
         stage('tester2'){
-          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '1')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '1')
+            ]
+          }
         }
         stage('tester3'){
-          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '2')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '2')
+            ]
+          }
         }
         stage('tester4'){
-          build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '3')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '3')
+            ]
+          }
         }
       }
     }
@@ -79,28 +87,36 @@ pipeline {
       failFast false
       parallel {
         stage('tester1'){
-          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '0')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '0')
+            ]
+          }
         }
         stage('tester2'){
-          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '1')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '1')
+            ]
+          }
         }
         stage('tester3'){
-          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '2')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '2')
+            ]
+          }
         }
         stage('tester4'){
-          build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'PORT', value: "${params.INDY_HOSTNAME}"),
-          string(name: 'SERIAL_NUMBER', value: '3')
-          ]
+          steps{
+            build job: 'indy-stress-test-baseline-2', propagate: true, wait: true, parameters: [string(name: 'HOSTNAME', value: "${params.HOSTNAME}"),
+            string(name: 'PORT', value: "${params.PORT}"),
+            string(name: 'SERIAL_NUMBER', value: '3')
+            ]
+          }
         }
       }
     }
