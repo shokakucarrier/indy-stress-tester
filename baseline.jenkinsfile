@@ -25,11 +25,11 @@ pipeline {
             value: /home/jenkins
           resources:
             requests:
-              memory: 4Gi
-              cpu: 2000m
+              memory: 500Mi
+              cpu: 200m
             limits:
-              memory: 4Gi
-              cpu: 2000m
+              memory: 500Mi
+              cpu: 200m
           volumeMounts:
           - mountPath: /mnt/ocp
             name: volume-2
