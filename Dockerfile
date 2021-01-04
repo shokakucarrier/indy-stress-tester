@@ -1,7 +1,5 @@
 FROM quay.io/openshift/origin-jenkins-agent-base:v4.0
 
-MAINTAINER NOS Team
-
 ENV TZ=UTC \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
