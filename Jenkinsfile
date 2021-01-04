@@ -40,9 +40,9 @@ pipeline {
                             choice(name: 'SCRIPT', choices: jmxNames, description: "Test suite"),
                             string(name: 'threads', defaultValue: '5', description: 'Jmeter treads'),
                             string(name: 'loops', defaultValue: '10', description: 'Script loops, controls running time'),
-                            string(name: 'url', defaultValue: 'indy-infra-nos-automation.cloud.paas.psi.redhat.com', description: 'Indy URL to test'),
+                            string(name: 'url', defaultValue: 'indy-perf-spmm-automation.apps.ocp4.prod.psi.redhat.com', description: 'Indy URL to test'),
                             string(name: 'port', defaultValue: '80', description: 'Indy port to test'),
-                            string(name: 'daUrl', defaultValue: 'indy-perf-da-nos-automation.cloud.paas.psi.redhat.com', description: '*only in DA stress* DA service hostname'),
+                            string(name: 'daUrl', defaultValue: 'indy-perf-da-spmm-automation.apps.ocp4.prod.psi.redhat.com', description: '*only in DA stress* DA service hostname'),
                             string(name: 'gitRepoName', defaultValue: 'weft', description: '*only in DA stress* git test sample'),
                             string(name: 'gitRepoUrl', defaultValue: 'https://github.com/Commonjava/weft.git', description: '*only in DA stress* git test sample url')
                         ]
