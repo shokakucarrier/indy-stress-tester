@@ -3,11 +3,11 @@ FROM quay.io/openshift/origin-jenkins-agent-base:v4.0
 ENV TZ=UTC \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
-	JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+	JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 
 #USER root
 
-ARG MAVEN_VERSION=3.3.9
+ARG MAVEN_VERSION=3.6.3
 ARG	PME_VERSION=4.2
 
 ENV LANG=en_US.UTF-8 \
@@ -16,12 +16,11 @@ ENV LANG=en_US.UTF-8 \
 # Install Maven
 COPY CentOS-Base.repo /etc/yum.repos.d/
 
-RUN INSTALL_PKGS="java-1.8.0-openjdk-devel.x86_64 python3 python3-pip python-virtualenv" && \
+RUN INSTALL_PKGS="java-11-openjdk-devel python3 python3-pip python-virtualenv" && \
     curl http://mirror.centos.org/centos-7/7/os/x86_64/RPM-GPG-KEY-CentOS-7 -o /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
     DISABLES="--disablerepo=rhel-server-extras --disablerepo=rhel-server --disablerepo=rhel-fast-datapath --disablerepo=rhel-server-optional --disablerepo=rhel-server-ose --disablerepo=rhel-server-rhscl" && \
     yum $DISABLES -y update && \
     yum $DISABLES install -y $INSTALL_PKGS && \
-    rpm -V java-1.8.0-openjdk-devel.x86_64 && \
     yum clean all -y && \
     mkdir -p $HOME/.m2 
 
@@ -30,8 +29,6 @@ RUN chown -R 1001:0 $HOME && \
 
 ADD pki/* /etc/pki/ca-trust/source/anchors/
 RUN update-ca-trust extract
-
-RUN	sed -i 's/jdk.tls.disabledAlgorithms=SSLv3/jdk.tls.disabledAlgorithms=EC,ECDHE,ECDH,SSLv3/g' $JAVA_HOME/jre/lib/security/java.security
 
 # NCL-4067: remove useless download progress with batch mode (-B)
 RUN curl -SL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share
