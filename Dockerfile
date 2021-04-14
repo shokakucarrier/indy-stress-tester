@@ -9,6 +9,6 @@ RUN DISABLES="--disablerepo=rhel-server-extras --disablerepo=rhel-server --disab
     yum $DISABLES install -y http://data-perf.eng.pek2.redhat.com/rpms/rhel7/noarch/perfcharts-0.6.1-1.el7.noarch.rpm && \
     yum clean all -y && \
     pip3 install wheel && pip3 install --upgrade setuptools &&\
-    pip3 install bzt j2cli[yaml]
+    pip3 install j2cli[yaml]
 EXPOSE 9270
 WORKDIR /src
